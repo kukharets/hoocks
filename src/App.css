@@ -1,0 +1,40 @@
+.app {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clock-wrapper {
+  width: 400px;
+  height: 400px;
+  background-color: azure;
+  border: 5px solid #ff916e;
+  border-radius: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clock-center {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  background-color: #ff916e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seconds-arrow-wrapper {
+  width: 2px;
+  height: 400px;
+  position: relative;
+}
+
+.seconds-arrow {
+  height: 50%;
+  background-color: #ff916e;
+}
