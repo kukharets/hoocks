@@ -26,17 +26,37 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 999;
 }
 
-.seconds-arrow-wrapper {
+.time-arrow-wrapper {
   width: 2px;
   height: 400px;
+  position: absolute;
+}
+
+.minutes-arrow-wrapper {
+  width: 3px;
+  height: 350px;
+  position: absolute;
+}
+
+
+.hours-arrow-wrapper {
+  width: 3px;
+  height: 300px;
   position: relative;
 }
 
-.seconds-arrow {
+.time-arrow {
   height: 50%;
   background-color: #ff916e;
+}
+
+.time-arrow-hour {
+  height: 50%;
+  background-color: black;
+  z-index: 1;
 }
 
 .clock-numbers-wrapper {
