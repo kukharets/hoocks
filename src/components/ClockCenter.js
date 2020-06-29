@@ -2,61 +2,27 @@ import React, {useCallback, useEffect, useMemo, useReducer, useRef, useState} fr
 import {calculateClockAngle} from "../helpers/calculateClockAngle";
 import ClockRight from "./ClockRight";
 import TestRender from "./TestRender";
+import useTimer from "../customHooks/useTimer";
+import TimeArrow from "./TimeArrow";
 
-const initialState = {seconds: 0, minutes: 0, hours: 0, secondsAngle: 0, minutesAngle: 0, hoursAngle: 0};
 export const TimeContext = React.createContext({seconds: 0});
 
-function reducer(state, action) {
-  switch (action.type) {
-    case 'SECONDS_INCREMENT': {
-      const { payload } = action;
-      let newMinutes = payload === 60 ? state.minutes + 1 : state.minutes;
-      let newHours = newMinutes === 60 ? state.hours + 1 : state.hours;
-      return {
-        ...state,
-        minutes: newMinutes,
-        seconds: payload,
-        hours: newHours,
-        secondsAngle: calculateClockAngle(payload, "seconds"),
-        minutesAngle: calculateClockAngle(newMinutes, "minutes"),
-        hoursAngle: calculateClockAngle(newHours, "hours"),
-      }
-    }
-    default:
-      throw new Error();
-  }
-}
-
 function ClockCenter() {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const { seconds, secondsAngle, minutes, minutesAngle, hoursAngle } = state;
-  const [localMinutes, setLocalMinutes] = useState(0);
+  const { seconds, secondsAngle, minutes, minutesAngle, hoursAngle, hours } = useTimer();
   const secondsArrow = useRef();
-  useEffect(() => {
-    console.log()
-    setTimeout(() => {
-      setLocalMinutes(minutes + 1)
-      dispatch({type: 'SECONDS_INCREMENT', payload: seconds < 60 ? seconds + 1 : 0})
-    }, 500);
-  }, [seconds]);
 
   const transformValue = secondsArrow.current
     ? window.getComputedStyle(secondsArrow.current).getPropertyValue('transform')
     : 0;
 
+  const handleMinutesHover = useCallback(() => {
 
-  const calculateLeft = () => {
-    console.warn('calculateLeft')
-  }
+  }, [minutes]);
 
-  const memoizedCalculateLeft = useCallback(
-    () => {
-      console.warn("MEMO")
-    },
-    [minutes],
-  );
+  const handleMinutesHover1 = () => {
 
-  const hours = seconds > 60 ? Number(minutes/60).toFixed(0) : 0;
+
+  };
 
   return (
     <TimeContext.Provider value={{seconds}}>
@@ -66,6 +32,7 @@ function ClockCenter() {
           <div ref={secondsArrow} style={{transform: `rotate(${secondsAngle}deg)`}} className="time-arrow-wrapper">
             <div className="time-arrow"/>
           </div>
+          <TimeArrow angle={minutesAngle} arrowClass={'time-arrow'} wrapperClass={'minutes-arrow-wrapper'} handleHover={handleMinutesHover1}/>
           <div style={{transform: `rotate(${minutesAngle}deg)`}} className="minutes-arrow-wrapper">
             <div className="time-arrow"/>
           </div>

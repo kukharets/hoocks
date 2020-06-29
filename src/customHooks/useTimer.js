@@ -1,23 +1,37 @@
 import React, {useCallback, useEffect, useMemo, useReducer, useRef, useState} from 'react';
+import {calculateClockAngle} from "../helpers/calculateClockAngle";
 
+const initialState = {seconds: 0, minutes: 0, hours: 0, secondsAngle: 0, minutesAngle: 0, hoursAngle: 0};
+
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'SECONDS_INCREMENT': {
+      const { payload } = action;
+      let newMinutes = payload === 60 ? state.minutes + 1 : state.minutes;
+      let newHours = newMinutes === 60 ? state.hours + 1 : state.hours;
+      return {
+        ...state,
+        minutes: newMinutes,
+        seconds: payload,
+        hours: newHours,
+        secondsAngle: calculateClockAngle(payload, "seconds"),
+      }
+    }
+    default:
+      throw new Error();
+  }
+}
 export default function useTimes() {
   const [state, dispatch] = useReducer(reducer, initialState);
-
-  const { seconds, angle, minutes } = state;
-
-  const previousRef = useRef();
-  const previous = previousRef.current;
-
-  // Pass previous and new value to compare function
-  const isEqual = compare(previous, value);
-
-  // If not equal update previous to new value (for next render)
-  // and then return new new value below.
+  const { seconds, minutes, hours } = state;
   useEffect(() => {
-    if (!isEqual) {
-      previousRef.current = value;
-    }
-  });
+    setTimeout(() => {
+      dispatch({type: 'SECONDS_INCREMENT', payload: seconds < 60 ? seconds + 1 : 0})
+    }, 500);
+  }, [seconds]);
+  const hoursAngle = useMemo(() => calculateClockAngle(hours, "hours"), [hours]);
+  const minutesAngle = useMemo(() => calculateClockAngle(minutes, "minutes"), [minutes]);
 
-  return isEqual ? previous : value;
+  return {...state, hoursAngle, minutesAngle}
 }
