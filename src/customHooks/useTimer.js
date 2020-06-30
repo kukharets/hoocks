@@ -29,7 +29,7 @@ export default function useTimer() {
       dispatch({type: 'SECONDS_INCREMENT', payload: seconds < 60 ? seconds + 1 : 0})
     }, 500);
   }, [seconds]);
-  const secondsAngle = calculateClockAngle(seconds, "seconds");
+  const secondsAngle = useMemo(() => calculateClockAngle(seconds, "seconds"), [seconds]);
   const hoursAngle = useMemo(() => calculateClockAngle(hours, "hours"), [hours]);
   const minutesAngle =  useMemo(() => calculateClockAngle(minutes, "minutes"), [minutes]);
 

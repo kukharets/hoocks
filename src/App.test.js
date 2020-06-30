@@ -1,11 +1,6 @@
 import React from 'react';
-import {  render, cleanup, waitForDomChange } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import useTimer from "./customHooks/useTimer";
-import ClockCenter from "./components/ClockCenter";
-import { mount, shallow  } from "enzyme";
-import { act } from 'react-dom/test-utils';
-import TimeArrow from "./components/TimeArrow";
 describe('useTimer hook test', () => {
   it('should start with initial state values', () => {
     const { result  }= renderHook(() => useTimer());
