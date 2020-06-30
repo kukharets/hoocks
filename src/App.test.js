@@ -1,15 +1,14 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import App from './App';
+import {  render, cleanup, waitForDomChange } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import useTimer from "./customHooks/useTimer";
-import { shallow } from 'enzyme';
 import ClockCenter from "./components/ClockCenter";
-
-
+import { mount, shallow  } from "enzyme";
+import { act } from 'react-dom/test-utils';
+import TimeArrow from "./components/TimeArrow";
 describe('useTimer hook test', () => {
   it('should start with initial state values', () => {
-    const { result, waitForNextUpdate  }= renderHook(() => useTimer());
+    const { result  }= renderHook(() => useTimer());
     expect (result.current).toStrictEqual(
       {seconds: 0, minutes: 0, hours: 0, secondsAngle: 0, minutesAngle: 0,hoursAngle: 0});
   });
@@ -18,6 +17,7 @@ describe('useTimer hook test', () => {
     it('should not update minutes and hour', async () => {
       const { result, waitForNextUpdate } = renderHook(() => useTimer());
       await waitForNextUpdate();
+
       expect(result.current.hours).toBe(0);
       expect(result.current.minutes).toBe(0);
     });
@@ -27,11 +27,4 @@ describe('useTimer hook test', () => {
       expect(result.current.seconds).toBe(1);
     });
   })
-});
-
-describe('ClockCenter component', () => {
-  it('contains a header with the "Hello world!"', () => {
-    const clock = mount(<ClockCenter/>);
-    expect(clock.find('.time-arrow-seconds')).toHave.lengthOf(1);
-  });
 });

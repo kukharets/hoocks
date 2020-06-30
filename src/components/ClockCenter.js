@@ -1,5 +1,4 @@
 import React, {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
-import {calculateClockAngle} from "../helpers/calculateClockAngle";
 import ClockRight from "./ClockRight";
 import useTimer from "../customHooks/useTimer";
 import TimeArrow from "./TimeArrow";
