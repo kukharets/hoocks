@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useReducer, useRef, useState} from 'react';
+import React, { useEffect, useMemo, useReducer, useRef, useState} from 'react';
 import {calculateClockAngle} from "../helpers/calculateClockAngle";
 
 const initialState = {seconds: 0, minutes: 0, hours: 0, secondsAngle: 0, minutesAngle: 0, hoursAngle: 0};
@@ -15,14 +15,13 @@ function reducer(state, action) {
         minutes: newMinutes,
         seconds: payload,
         hours: newHours,
-        secondsAngle: calculateClockAngle(payload, "seconds"),
       }
     }
     default:
       throw new Error();
   }
 }
-export default function useTimes() {
+export default function useTimer() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { seconds, minutes, hours } = state;
   useEffect(() => {
@@ -30,8 +29,9 @@ export default function useTimes() {
       dispatch({type: 'SECONDS_INCREMENT', payload: seconds < 60 ? seconds + 1 : 0})
     }, 500);
   }, [seconds]);
+  const secondsAngle = calculateClockAngle(seconds, "seconds");
   const hoursAngle = useMemo(() => calculateClockAngle(hours, "hours"), [hours]);
-  const minutesAngle = useMemo(() => calculateClockAngle(minutes, "minutes"), [minutes]);
+  const minutesAngle =  useMemo(() => calculateClockAngle(minutes, "minutes"), [minutes]);
 
-  return {...state, hoursAngle, minutesAngle}
+  return {...state, secondsAngle, hoursAngle, minutesAngle}
 }

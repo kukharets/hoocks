@@ -29,31 +29,31 @@
   z-index: 999;
 }
 
-.time-arrow-wrapper {
+.time-arrow-wrapper-seconds {
   width: 2px;
   height: 400px;
   position: absolute;
 }
 
-.minutes-arrow-wrapper {
+.time-arrow-wrapper-minutes {
   width: 3px;
   height: 350px;
   position: absolute;
 }
 
 
-.hours-arrow-wrapper {
+.time-arrow-wrapper-hours {
   width: 3px;
   height: 300px;
   position: relative;
 }
 
-.time-arrow {
+.time-arrow-seconds, .time-arrow-minutes {
   height: 50%;
   background-color: #ff916e;
 }
 
-.time-arrow-hour {
+.time-arrow-hours {
   height: 50%;
   background-color: black;
   z-index: 1;
@@ -87,4 +87,13 @@
 .test-render {
   position: absolute;
   top: -400px;
+}
+
+@keyframes crescendo {
+  0%   {transform: scale(1);}
+  100% {transform: scale(1.2);}
+}
+
+.pulse {
+  animation: crescendo 0.1s alternate infinite ease-in;
 }

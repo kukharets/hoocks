@@ -1,5 +1,5 @@
 export function calculateClockAngle(value, type) {
-  console.warn('go', type)
+  console.warn('calculateClockAngle', type)
   let angle = 0;
   switch (type) {
     case "minutes":
